@@ -1,0 +1,1 @@
+Home Assignment Details: https://confluence.solaredge.com/display/PRTNG/IoT+Group+-+Assignment
