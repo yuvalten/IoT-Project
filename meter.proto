@@ -1,0 +1,52 @@
+syntax = "proto2";
+
+
+
+message XMeterTelem {
+    enum EMeterType{
+        option allow_alias = true;
+        METER_TYPE_NONE = 0;
+
+		METER_TYPE_PRODUCTION =1;
+
+		METER_TYPE_FEED_IN =2;
+
+		METER_TYPE_CONSUMPTION =3;
+
+		METER_TYPE_PURCHASED =4;
+
+		METER_TYPE_FEED_IN_PURCHASED =5;
+
+		METER_TYPE_SELF_CONSUMPTION =6;
+
+		METER_TYPE_STORAGE_CHARGE_PV =7;
+
+		METER_TYPE_STORAGE_CHARGE_AC =8;
+
+		METER_TYPE_PV =9;
+
+		METER_TYPE_PRODUCTION_EXT =10;
+
+		METER_TYPE_NUM =10;
+    }
+    optional string TimeStamp=1;
+    optional EMeterType MeterType=2;
+    optional int64 PosEnergy=3;
+    optional int64 NegEnergy = 4;
+    optional float PosActivePowerTotal = 5;
+    optional float NegActivePowerTotal = 6;
+    optional float CurrentA = 7;
+    optional float CurrentB = 8;
+    optional float CurrentC = 9;
+    optional float VoltageAN = 10;
+    optional float VoltageBN = 11;
+    optional float VoltageCN = 12;
+    optional float Freq = 13;
+    optional float PosActivePowerA = 14;
+    optional float PosActivePowerB = 15;
+    optional float PosActivePowerC = 16;
+    optional float NegActivePowerA = 17;
+    optional float NegActivePowerB = 18;
+    optional float NegActivePowerC = 19;
+  }
+

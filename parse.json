@@ -1,0 +1,66 @@
+{
+ "Measurements" :
+ [
+ {
+ "Date": "1/4/2019",
+ "Time": "08:10:00",
+ "PosEnergy": "7",
+ "NegEnergy": "0",
+ "PosActivePowerTotal": "0",
+ "NegActivePowerTotal": "0",
+ "CurrentA": "0",
+ "CurrentB": "0",
+ "CurrentC": "0",
+ "VoltageAN": "0",
+ "VoltageBN": "0",
+ "VoltageCN": "0",
+ "Freq": "0",
+ "PosActivePowerA": "0",
+ "PosActivePowerB": "0",
+ "PosActivePowerC": "0",
+ "NegActivePowerA": "0",
+ "NegActivePowerB": "0",
+ "NegActivePowerC": "0"
+ },
+ {
+ "Date": "1/4/2019",
+ "Time": "08:10:02",
+ "PosActivePowerTotal": "0",
+ "NegActivePowerTotal": "0",
+ "CurrentA": "0",
+ "CurrentB": "0",
+ "CurrentC": "0",
+ "VoltageAN": "0",
+ "VoltageBN": "0",
+ "VoltageCN": "0",
+ "Freq": "0",
+ "PosActivePowerA": "0",
+ "PosActivePowerB": "0",
+ "PosActivePowerC": "0",
+ "NegActivePowerA": "0",
+ "NegActivePowerB": "0",
+ "NegActivePowerC": "0"
+ },
+ {
+ "Date": "1/4/2019",
+ "Time": "08:10:04",
+ "PosEnergy": "0",
+ "NegEnergy": "0",
+ "PosActivePowerTotal": "0",
+ "NegActivePowerTotal": "0",
+ "CurrentA": "0",
+ "CurrentB": "0",
+ "CurrentC": "0",
+ "VoltageAN": "0",
+ "VoltageBN": "0",
+ "VoltageCN": "0",
+ "Freq": "0",
+ "PosActivePowerA": "0",
+ "PosActivePowerB": "0",
+ "PosActivePowerC": "0",
+ "NegActivePowerA": "0",
+ "NegActivePowerB": "0",
+ "NegActivePowerC": "0"
+ }
+ ]
+}
