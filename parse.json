@@ -25,6 +25,8 @@
  {
  "Date": "1/4/2019",
  "Time": "08:10:02",
+  "PosEnergy": "6",
+  "NegEnergy": "0",
  "PosActivePowerTotal": "0",
  "NegActivePowerTotal": "0",
  "CurrentA": "0",

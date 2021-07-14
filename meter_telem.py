@@ -5,7 +5,7 @@ from enum import Enum
 class MeterTelem:
 
 	def __init__(self):
-		self.TimeStamp=0
+		self.TimeStamp=""
 		self.MeterType=0
 		self.PosEnergy=0
 		self.NegEnergy=0

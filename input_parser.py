@@ -16,7 +16,7 @@ class InputParser:
         # returns JSON object as
         # a dictionary named data
         data = json.load(f)
-        # print(data)
+        print(data)
         #print(data['Measurements'][sampling_index]['Time'])
         print(data['Measurements'][sampling_index]['Date']+data['Measurements'][sampling_index]['Time'])
         # Closing file
