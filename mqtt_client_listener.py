@@ -4,8 +4,8 @@ import os
 import sys
 
 from mqtt_pub_sub import MQTTSub
-from meter_pb2 import Meter
-
+# from meter_pb2 import Meter #??????
+from meter_sim import ms
 import time
 import threading
 import argparse
@@ -26,10 +26,10 @@ PARSER.add_argument('-t', '--topic', type=str, dest='TOPIC', help='wifi network 
 ARGS = PARSER.parse_args()
 
 MAX_PROTO_PER_LINE = 80
-
+FILE_PATH="/usr/bin/python3.8 /home/osboxes/Embedded/yuval-tenenbaum"
 
 class Sniffer:
-    def __init__(self, topic, file_path=None):
+    def __init__(self, topic, file_path=FILE_PATH):
         self.ip = BROKER_IP
         print("Running MQTT sniffer at {}, topic {}".format(self.ip, topic))
         self.client = MQTTSub(topic=topic, host=self.ip, qos=0)
@@ -85,7 +85,7 @@ class Sniffer:
     def deserialize_message(data, topic):
         try:
             if "meter" in topic:
-                msg = Meter()
+                msg = ms()
             else:
                 return data
             msg.ParseFromString(data)

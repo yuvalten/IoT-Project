@@ -1,9 +1,12 @@
 import mqtt_client_listener
 import meter_sim
+
 class Main:
     def main(self):
-        self.Mqtt_Client_Listener = mqtt_client_listener.Sniffer("Meter","/home/osboxes/Embedded/yuval-tenenbaum/parse.json",)
-        self.Meter_Sim = meter_sim.MeterSim()
+        mqtt_clnt_lstnr = mqtt_client_listener
+        decode_msg = mqtt_clnt_lstnr.Sniffer("Meter","/home/osboxes/Embedded/yuval-tenenbaum/parse.json")
+        mtr_sm = meter_sim.MeterSim()
+        mtr_sm.meter_sim_run()
 
+        return print(decode_msg)
 
-        return(mqtt_client_listener.data)

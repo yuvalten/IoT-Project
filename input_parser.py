@@ -1,24 +1,22 @@
 import meter_telem
 import json
-
+import datetime
 
 class InputParser:
     def __init__(self):
 
         self.MeterTelem = meter_telem.MeterTelem()
-        # self.MeterTelem = self.get_meter_telem_from_input()
+
 
     def get_meter_telem_from_input(self, sampling_index):
-        # MeterTelem = meter_telem.MeterTelem()
-
         # Opening JSON file
         f = open('parse.json',)
         # returns JSON object as
         # a dictionary named data
         data = json.load(f)
-        print(data)
+        # print(data)
         #print(data['Measurements'][sampling_index]['Time'])
-        print(data['Measurements'][sampling_index]['Date']+data['Measurements'][sampling_index]['Time'])
+        # print(data['Measurements'][sampling_index]['Date']+data['Measurements'][sampling_index]['Time'])
         # Closing file
         f.close()
 
@@ -49,7 +47,8 @@ class InputParser:
 if __name__ == "__main__":
     input = InputParser()
     input.get_meter_telem_from_input(0)
-    print(input.MeterTelem.PosEnergy)
+
+    print(input.MeterTelem.TimeStamp)
 
 
 
