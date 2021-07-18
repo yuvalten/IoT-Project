@@ -44,11 +44,11 @@ class InputParser:
         return self.MeterTelem
 
 
-if __name__ == "__main__":
-    input = InputParser()
-    input.get_meter_telem_from_input(0)
-
-    print(input.MeterTelem.TimeStamp)
+# if __name__ == "__main__":
+#     input = InputParser()
+#     input.get_meter_telem_from_input(0)
+#
+#     print(input.MeterTelem.PosEnergy)
 
 
 

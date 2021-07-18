@@ -4,15 +4,14 @@ import os
 import sys
 
 from mqtt_pub_sub import MQTTSub
-# from meter_pb2 import Meter #??????
-from meter_sim import ms
+from meter_pb2 import XMeterTelem #??????
+from meter_sim import MeterSim
+from pb_msg import PbMsg
+from input_parser import InputParser
 import time
 import threading
 import argparse
-import datetime
-import input_parser
-import meter_telem
-import pb_msg
+
 PARSER = argparse.ArgumentParser(description='This is a MQTT sniffer tool',
                                  formatter_class=argparse.RawTextHelpFormatter, add_help=False)
 
@@ -85,17 +84,25 @@ class Sniffer:
     def deserialize_message(data, topic):
         try:
             if "meter" in topic:
-                msg = ms()
+                msg = XMeterTelem()
             else:
                 return data
-            msg.ParseFromString(data)
+            msg.ParseFromString()
+            print(msg)
             return msg
         except Exception as ex:
             print("This isn't a known message type ", ex)
             return data
+    # def pb_decode_msg(self):
+    #     inp = InputParser()
+    #     inpt = inp.get_meter_telem_from_input(0)
+    #     mt_pb2 = self.pb_convert(self.inpt)
+    #     mt_pb2.ParseFromString(self.bin_buffer)
+    #     print(mt_pb2)
 
 def main():
     global BROKER_IP
+    ms = MeterSim()
     if ARGS.HELP:
         PARSER.print_help()
         return
@@ -106,6 +113,12 @@ def main():
     if ARGS.DEST_IP:
         BROKER_IP = ARGS.DEST_IP 
     Sniffer(topic)
-
+    Sniffer.deserialize_message(ms.meter_sim_run)
 
 main()
+
+if __name__ == "__main__":
+    inp = InputParser()
+    inpt = inp.get_meter_telem_from_input(0)
+    mq_cnt_lst = Sniffer("meter",FILE_PATH)
+    mq_cnt_lst.deserialize_message(PbMsg.pb_convert(inpt), "meter")

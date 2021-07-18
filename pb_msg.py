@@ -4,49 +4,60 @@ import meter_pb2
 # # files path = /usr/bin/python3.8 /home/osboxes/Embedded/yuval-tenenbaum
 
 class PbMsg:
-
     def __init__(self):
-        # self.bin_buffer = self.pb_encode_msg(mt)
-        pass
-    # convert meter telem to XMeterTelem (proto)
-    def pb_convert(self,mt):
+        self.inp = InputParser()
+        self.inpt = self.inp.get_meter_telem_from_input(0)
+        self.bin_buffer = self.pb_encode_msg(self.inpt)
+        self.mt_pb2 = self.bin_buffer
+
+    # serializing meter_pb2
+    def pb_encode_msg(self, inpt):
+        mt_pb2 = self.pb_convert(inpt)
+        with open("./meter_pb2.bin", "wb") as fd:
+            self.bin_buffer = mt_pb2.SerializeToString()
+            fd.write(self.bin_buffer)
+        # print(self.bin_buffer)
+        return self.bin_buffer
+
+    def pb_convert(self, inpt):
         mt_pb2 = meter_pb2.XMeterTelem()
-        mt_pb2.TimeStamp = mt.TimeStamp
-        mt_pb2.MeterType = mt.MeterType
-        mt_pb2.PosEnergy = mt.PosEnergy
-        mt_pb2.NegEnergy = mt.NegEnergy
-        mt_pb2.PosActivePowerTotal = mt.PosActivePowerTotal
-        mt_pb2.NegActivePowerTotal = mt.NegActivePowerTotal
-        mt_pb2.CurrentA = mt.CurrentA
-        mt_pb2.CurrentB = mt.CurrentB
-        mt_pb2.CurrentC = mt.CurrentC
-        mt_pb2.VoltageAN = mt.VoltageAN
-        mt_pb2.VoltageBN = mt.VoltageBN
-        mt_pb2.VoltageCN = mt.VoltageCN
-        mt_pb2.Freq = mt.Freq
-        mt_pb2.PosActivePowerA = mt.PosActivePowerA
-        mt_pb2.PosActivePowerB = mt.PosActivePowerB
-        mt_pb2.PosActivePowerC = mt.PosActivePowerC
-        mt_pb2.NegActivePowerA = mt.NegActivePowerA
-        mt_pb2.NegActivePowerB = mt.NegActivePowerB
-        mt_pb2.NegActivePowerC = mt.NegActivePowerC
+        mt_pb2.TimeStamp = inpt.TimeStamp
+        mt_pb2.MeterType = inpt.MeterType
+        mt_pb2.PosEnergy = int(inpt.PosEnergy)
+        mt_pb2.NegEnergy = int(inpt.NegEnergy)
+        mt_pb2.PosActivePowerTotal = int(inpt.PosActivePowerTotal)
+        mt_pb2.NegActivePowerTotal = int(inpt.NegActivePowerTotal)
+        mt_pb2.CurrentA = int(inpt.CurrentA)
+        mt_pb2.CurrentB = int(inpt.CurrentB)
+        mt_pb2.CurrentC = int(inpt.CurrentC)
+        mt_pb2.VoltageAN = int(inpt.VoltageAN)
+        mt_pb2.VoltageBN = int(inpt.VoltageBN)
+        mt_pb2.VoltageCN = int(inpt.VoltageCN)
+        mt_pb2.Freq = int(inpt.Freq)
+        mt_pb2.PosActivePowerA = int(inpt.PosActivePowerA)
+        mt_pb2.PosActivePowerB = int(inpt.PosActivePowerB)
+        mt_pb2.PosActivePowerC = int(inpt.PosActivePowerC)
+        mt_pb2.NegActivePowerA = int(inpt.NegActivePowerA)
+        mt_pb2.NegActivePowerB = int(inpt.NegActivePowerB)
+        mt_pb2.NegActivePowerC = int(inpt.NegActivePowerC)
         return mt_pb2
 
-    # serializing meter_pb2 proto to binnary string name bin_buffer
-    def pb_encode_msg(self,mt):
-        mt_pb2 = self.pb_convert(mt)
-        with open("./meter_pb2.bin", "wb") as fd:
-            bin_buffer = mt_pb2.SerializeToString()
-            fd.write(bin_buffer)
-            # print(bin_buffer)
-        return bin_buffer
+#     def pb_decode_msg(self):
+#         mt_pb2 = self.pb_convert(self.inpt)
+#         mt_pb2.ParseFromString(self.bin_buffer)
+#         print(mt_pb2)
 
-    # def pb_decode_msg(self):
-    #     mt_pb2 = self.pb_convert(mt)
-    #     mt_pb2.ParseFromString(self.bin_buffer)
-    #     print(mt_pb2)
+# if __name__ == "__main__":
+#     # mt = MeterTelem()
+#     inp = InputParser()
+#     inpt = inp.get_meter_telem_from_input(0)
+#     msg = PbMsg()
+# #     # msg.pb_encode_msg(inpt)
+#     msg.pb_decode_msg()
 
-if __name__ == "__main__":
-    mt = MeterTelem()
-    msg = PbMsg()
+
+
+
+
+
 
