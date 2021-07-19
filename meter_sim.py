@@ -1,11 +1,10 @@
-from meter_telem import MeterTelem
+import threading
 from pb_msg import PbMsg
 from input_parser import InputParser
 import mqtt_pub_sub
-import schedule
 import time
-PUBLISH_RATE = 5
-#install schedule - pip install schedule
+
+# PUBLISH_RATE = 5
 
 class MeterSim:
 
@@ -13,25 +12,34 @@ class MeterSim:
         self.mq = mqtt_pub_sub.MQTTPub()
         self.pb = PbMsg()
         self.inp = InputParser()
+        self.t1 = threading.Thread(target=self.meter_sim_run)
 
-    def meter_sim_run():
-        # mq = mqtt_pub_sub.MQTTPub()
-        mq = mqtt_pub_sub.MQTTPub()
-        pb = PbMsg()
-        inp = InputParser()
-        inpt = inp.get_meter_telem_from_input(0)
-        mq.publish_msg("meter/", pb.pb_encode_msg(inpt))
-        # print(pb.pb_encode_msg(inpt))
-        return
-
-    schedule.every(PUBLISH_RATE).seconds.do(meter_sim_run)
-    while True:
-        schedule.run_pending()
-        time.sleep(1)
+    def meter_sim_run(self,publish_rate=5):
+        while True:
+            # mq_sub = mqtt_pub_sub.MQTTSub("meter")
+            # mq_sub.client.subscribe("meter", 0)
+            self.mq = mqtt_pub_sub.MQTTPub()
+            self.pb = PbMsg()
+            inpt = self.inp.get_meter_telem_from_input(0)
+            self.mq.publish_msg("meter/", self.pb.pb_encode_msg(inpt))
+            print(self.pb.pb_encode_msg(inpt))
+            time.sleep(publish_rate)
 
 if __name__ == "__main__":
-        ms = MeterSim()
-        ms.meter_sim_run()
+    ms = MeterSim()
+    ms.meter_sim_run()
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

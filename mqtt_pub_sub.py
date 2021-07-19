@@ -14,7 +14,7 @@ lock = Lock()
 
 
 class MQTTSub:
-    def __init__(self, topic, host="localhost", port=1883, qos=0, fifo_max_size=0):
+    def __init__(self, topic, host="localhost", port=1883, qos=0, fifo_max_size=0,a=""):
         global NUMBER_OF_SUBSCRIBERS
         lock.acquire(blocking=True)
         self.client_id = "subscriber_pmanager_" + str(NUMBER_OF_SUBSCRIBERS)
@@ -37,6 +37,7 @@ class MQTTSub:
         self.running_iter = True
         self.t = Thread(target=self.iter)
         self.t.start()
+        self.a = a
 
     def on_connect(self, client, userdata, flags, rc):
         """
@@ -53,9 +54,13 @@ class MQTTSub:
         if rc != 0:
             raise Exception(self.client_id + " couldn't connect to broker, failed: " + str(rc))
         client.subscribe(self.topic, qos=self.qos)
+        # print("on_connect")
 
     def on_message(self, client, userdata, msg):
-        # print("pmanger: ", msg.topic + " " + str(msg.qos) + " " + str(msg.payload) + " " + str(msg.mid))
+        # print(msg)
+
+        print("pmanger: ", msg.topic + " " + str(msg.qos) + " " + str(msg.payload) + " " + str(msg.mid))
+        # print(self.a.ParseFromString(msg.payload))
         try:
             self.lock_queue.acquire()
             if self.queue.full():
@@ -91,7 +96,7 @@ class MQTTSub:
             self.lock_queue.acquire()
             if self.queue.empty():
                 return ("", "")
-            # (msg, topic) = self.queue.get()
+            (msg, topic) = self.queue.get()
             return self.queue.get()
         finally:
             self.lock_queue.release()
