@@ -15,19 +15,25 @@ class MeterSim:
         self.t1 = threading.Thread(target=self.meter_sim_run)
 
     def meter_sim_run(self,publish_rate=5):
+        # print(self.pb.mt_pb2)
+        # print(self.pb.bin_buffer)
         while True:
             # mq_sub = mqtt_pub_sub.MQTTSub("meter")
             # mq_sub.client.subscribe("meter", 0)
+
             self.mq = mqtt_pub_sub.MQTTPub()
             self.pb = PbMsg()
             inpt = self.inp.get_meter_telem_from_input(0)
-            self.mq.publish_msg("meter/", self.pb.pb_encode_msg(inpt))
-            print(self.pb.pb_encode_msg(inpt))
+            # self.mq.publish_msg("meter/", self.pb.pb_encode_msg(inpt))
+            self.mq.publish_msg("meter/", self.pb.bin_buffer)
+
+            # print(self.pb.pb_encode_msg(inpt))
             time.sleep(publish_rate)
 
 if __name__ == "__main__":
     ms = MeterSim()
     ms.meter_sim_run()
+
 
 
 
