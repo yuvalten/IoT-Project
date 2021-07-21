@@ -25,6 +25,8 @@ class MeterTelem:
 		self.NegActivePowerA=0
 		self.NegActivePowerB=0
 		self.NegActivePowerC=0
+#Enum class equivalent XMeterTelem Enum
+
 	class EMeterType(Enum):
 		#00
 		METER_TYPE_NONE = 0

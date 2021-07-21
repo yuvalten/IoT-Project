@@ -97,7 +97,7 @@ class MQTTSub:
 
             if self.queue.empty():
                 return ("", "")
-            # (msg, topic) = self.queue.get()  #the issue is here
+            # (msg, topic) = self.queue.get()
             return self.queue.get()
         finally:
             self.lock_queue.release()

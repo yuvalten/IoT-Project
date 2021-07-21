@@ -2,14 +2,12 @@
 import os
 import sys
 from mqtt_pub_sub import MQTTSub
-#from meter_pb2 import Meter
-# from meter_pb2 import XMeterTelem
 import meter_pb2
 import time
 import threading
 import argparse
 import datetime
-import pb_msg
+
 
 PARSER = argparse.ArgumentParser(description='This is a MQTT sniffer tool',
                                  formatter_class=argparse.RawTextHelpFormatter, add_help=False)
@@ -27,7 +25,8 @@ MAX_PROTO_PER_LINE = 80
 
 
 class Sniffer:
-    def __init__(self, topic="meter/", file_path=None):
+
+    def __init__(self, topic="meter", file_path=None):
         self.ip = "127.0.0.1"
         print("Running MQTT sniffer at {}, topic {}".format(self.ip, topic))
         self.client = MQTTSub(topic=topic, host=self.ip, qos=0)
@@ -35,8 +34,6 @@ class Sniffer:
         self.t = threading.Thread(target=self.iter)
         self.t.start()
         self.check_input()
-        # self.pb = pb_msg.PbMsg()
-        pass
 
     def check_input(self):
         try:
@@ -53,7 +50,7 @@ class Sniffer:
         time.sleep(3)
         while self.listener:
             (data, topic) = self.client.read_msg()
-            print(data)
+            # print(data)
             if data != "":
                 self.print_msg(self.deserialize_message(data, topic), topic)
             else:
@@ -84,17 +81,14 @@ class Sniffer:
     @staticmethod
     def deserialize_message(data, topic):
         try:
-            if "meter/" in topic:
+            if "meter" in topic:
                 # print(data)
                 # print(type(data))
                 # print(len(data))
                 msg = meter_pb2.XMeterTelem()
             else:
                 return data
-            # print(msg.ParseFromString(data))
             msg.ParseFromString(data)
-            # print(msg)
-
             return msg
         except Exception as ex:
             print("This isn't a known message type ", ex)
@@ -108,13 +102,13 @@ def main():
     if ARGS.TOPIC:
         topic = ARGS.TOPIC
     else:
-        topic = "meter/"
+        topic = "meter"
     if ARGS.DEST_IP:
         BROKER_IP = ARGS.DEST_IP
     Sniffer(topic)
 
 
-main()
+# main()
 
 
 

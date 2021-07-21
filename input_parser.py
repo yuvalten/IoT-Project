@@ -3,25 +3,18 @@ import json
 import datetime
 
 class InputParser:
+
     def __init__(self):
-
         self.MeterTelem = meter_telem.MeterTelem()
-
 
     def get_meter_telem_from_input(self, sampling_index):
         # Opening JSON file
         f = open('parse.json',)
-        # returns JSON object as
-        # a dictionary named data
+        # returns JSON object as a dictionary named data
         data = json.load(f)
-        # print(data)
-        #print(data['Measurements'][sampling_index]['Time'])
-        # print(data['Measurements'][sampling_index]['Date']+data['Measurements'][sampling_index]['Time'])
         # Closing file
         f.close()
-
-        #assigning new values to
-        # MeterTelem from data dictionary
+        #assigning new values to MeterTelem from data dictionary
         self.MeterTelem.TimeStamp = data['Measurements'][sampling_index]['Date'] + data['Measurements'][sampling_index]['Time']
         self.MeterTelem.PosEnergy = data['Measurements'][sampling_index]['PosEnergy']
         self.MeterTelem.NegEnergy = data['Measurements'][sampling_index]['NegEnergy']
@@ -40,15 +33,8 @@ class InputParser:
         self.MeterTelem.NegActivePowerA = data['Measurements'][sampling_index]['NegActivePowerA']
         self.MeterTelem.NegActivePowerB = data['Measurements'][sampling_index]['NegActivePowerB']
         self.MeterTelem.NegActivePowerC = data['Measurements'][sampling_index]['NegActivePowerC']
-
         return self.MeterTelem
 
-
-# if __name__ == "__main__":
-#     input = InputParser()
-#     input.get_meter_telem_from_input(0)
-#
-#     print(input.MeterTelem.PosEnergy)
 
 
 
