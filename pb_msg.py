@@ -9,7 +9,7 @@ class PbMsg:
         self.bin_buffer = self.pb_encode_msg(self.inpt)
         self.mt_pb2 = self.bin_buffer
 
-# serializing to string meter_pb2
+# Serializing to string meter_pb2
     def pb_encode_msg(self, inpt):
         mt_pb2 = self.pb_convert(self.inpt)
         with open("./meter_pb2.bin", "wb") as fd:
@@ -17,8 +17,9 @@ class PbMsg:
             fd.write(self.bin_buffer)
         return self.bin_buffer
 
-# converting mt_pb2 to XMeterTelem type (compiled proto file meter.proto)
+# Converting mt_pb2 to XMeterTelem type (compiled proto file meter.proto)
     def pb_convert(self, inpt):
+# Create meter_pb2 XMeterTelem instance
         self.mt_pb2 = meter_pb2.XMeterTelem()
         self.mt_pb2.TimeStamp = self.inpt.TimeStamp
         self.mt_pb2.MeterType = self.inpt.MeterType
